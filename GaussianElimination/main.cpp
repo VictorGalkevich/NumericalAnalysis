@@ -3,7 +3,7 @@
 
 std::vector<size_t> permutation;
 
-void Rearrange(std::vector<double> &x) {
+void Rearrange(const std::vector<double> &x) {
     for (size_t i = 0; i != x.size(); ++i) {
         if (i != permutation[i]) {
             const size_t in1 = permutation[i];
@@ -13,7 +13,8 @@ void Rearrange(std::vector<double> &x) {
     }
 }
 
-size_t FindPivotInRow(const std::vector<std::vector<double> > &numbers, const size_t row) {
+size_t FindPivotInRow(const std::vector<std::vector<double> > &numbers,
+                      const size_t row) {
     size_t pivotIndex = row;
 
     for (size_t i = row + 1; i < row; ++i) {
@@ -24,7 +25,9 @@ size_t FindPivotInRow(const std::vector<std::vector<double> > &numbers, const si
     return pivotIndex;
 }
 
-void SwapColumns(std::vector<std::vector<double> > &numbers, const size_t prev, const size_t best) {
+void SwapColumns(std::vector<std::vector<double> > &numbers,
+                 const size_t prev,
+                 const size_t best) {
     if (prev == best) {
         return;
     }
@@ -60,7 +63,8 @@ void Print(const std::vector<double> &numbers) {
     }
 }
 
-void Forward(std::vector<std::vector<double> > &a, std::vector<double> &b) {
+void Forward(std::vector<std::vector<double> > &a,
+             std::vector<double> &b) {
     const size_t n = b.size();
 
     for (size_t k = 0; k < n - 1; k++) {
@@ -79,7 +83,8 @@ void Forward(std::vector<std::vector<double> > &a, std::vector<double> &b) {
     }
 }
 
-std::vector<double> Backward(const std::vector<std::vector<double> > &a, std::vector<double> &b,
+std::vector<double> Backward(const std::vector<std::vector<double> > &a,
+                             std::vector<double> &b,
                              std::vector<double> &x) {
     const int32_t n = b.size();
 
@@ -95,7 +100,8 @@ std::vector<double> Backward(const std::vector<std::vector<double> > &a, std::ve
     return b;
 }
 
-std::vector<std::vector<double> > GaussianElimination(std::vector<std::vector<double> > a, std::vector<double> b,
+std::vector<std::vector<double> > GaussianElimination(std::vector<std::vector<double> > a,
+                                                      std::vector<double> b,
                                                       std::vector<double> &x) {
     Forward(a, b);
     Backward(a, b, x);
@@ -116,7 +122,8 @@ double CalculateUpperTrinagleMatrixDeterminant(const std::vector<std::vector<dou
     return res;
 }
 
-std::vector<double> CalculateResidualVector(const std::vector<std::vector<double> > &a, const std::vector<double> &b,
+std::vector<double> CalculateResidualVector(const std::vector<std::vector<double> > &a,
+                                            const std::vector<double> &b,
                                             const std::vector<double> &x) {
     const int32_t n = x.size();
     std::vector<double> residual(x.size());
@@ -175,6 +182,28 @@ std::vector<std::vector<double> > CalculateResidualMatrix(const std::vector<std:
     return residual;
 }
 
+double CalculateMatrixRowNorm(const std::vector<std::vector<double> > &a) {
+    double max = 0;
+    for (int i = 0; i < a.size(); ++i) {
+        max += std::abs(a[0][i]);
+    }
+    for (int i = 1; i < a.size(); ++i) {
+        double tmp = 0;
+        for (int j = 0; j < a.size(); ++j) {
+            tmp += std::abs(a[0][i]);
+        }
+        if (tmp > max) {
+            max = tmp;
+        }
+    }
+    return max;
+}
+
+double CalculateConditionNumber(const std::vector<std::vector<double> > &a,
+                                const std::vector<std::vector<double> > &inverse) {
+    return CalculateMatrixRowNorm(a) * CalculateMatrixRowNorm(inverse);
+}
+
 int main() {
     size_t n;
     std::cin >> n;
@@ -209,4 +238,5 @@ int main() {
     std::cout << "\nResidual matrix: \n\n";
     const std::vector<std::vector<double> > residual_matrix = CalculateResidualMatrix(a, inverse);
     Print(residual_matrix);
+    std::cout << "\nCondition number: " << CalculateConditionNumber(a, inverse);
 }
