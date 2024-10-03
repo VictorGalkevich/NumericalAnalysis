@@ -18,7 +18,7 @@ size_t FindPivotInRow(const std::vector<std::vector<double> > &numbers,
     size_t pivotIndex = row;
 
     for (size_t i = row + 1; i < row; ++i) {
-        if (numbers[row][i] > numbers[row][pivotIndex]) {
+        if (std::abs(numbers[row][i]) > std::abs(numbers[row][pivotIndex])) {
             pivotIndex = i;
         }
     }
