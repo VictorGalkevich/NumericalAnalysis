@@ -40,6 +40,10 @@ void SwapColumns(std::vector<std::vector<double> > &numbers,
         numbers[row][prev] = numbers[row][best];
         numbers[row][best] = temp;
     }
+
+	int tmp = permutation[prev];
+	permutation[prev] = permutation[best];
+	permutation[best] = tmp;
     swapCount++;
 }
 
