@@ -2,6 +2,7 @@
 #include <vector>
 
 std::vector<size_t> permutation;
+int32_t swapCount = 0;
 
 void Rearrange(const std::vector<double> &x) {
     for (size_t i = 0; i != x.size(); ++i) {
@@ -39,6 +40,7 @@ void SwapColumns(std::vector<std::vector<double> > &numbers,
         numbers[row][prev] = numbers[row][best];
         numbers[row][best] = temp;
     }
+    swapCount++;
 }
 
 void Print(const std::vector<std::vector<double> > &numbers) {
@@ -118,7 +120,9 @@ double CalculateUpperTrinagleMatrixDeterminant(const std::vector<std::vector<dou
     for (size_t i = 0; i != a.size(); ++i) {
         res *= a[i][i];
     }
-
+    if (swapCount % 2 != 0) {
+        res *= -1;
+    }
     return res;
 }
 
