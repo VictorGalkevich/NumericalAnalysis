@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+int iterations = 0;
+
 void CreateJacobiMatrix(
   std::vector<std::vector<double>>& A,
   std::vector<std::vector<double>>& B,
@@ -92,6 +94,7 @@ std::vector<double> SimpleIteration(
   double normValue;
 
   do {
+    iterations++;
     xk = xk_1;
     for (int i = 0; i < n; i++) {
       double tmp = 0;
@@ -117,7 +120,7 @@ int main() {
 
   ReadLinearSystem(a, f);
 
-  double precision = 1e-4;
+  double precision = 1e-5;
 
   std::vector<std::vector<double> > B(n, std::vector<double>(n));
   std::vector<double> b(n);
@@ -138,4 +141,6 @@ int main() {
   std::vector<double> residual = CalculateResidualVector(a, f, x);
   std::cout << "Residual vector: " << "\n";
   Print(residual);
+
+  std::cout << "Number of iterations: " << iterations << "\n";
 }
