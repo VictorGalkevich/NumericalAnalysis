@@ -21,7 +21,7 @@ void CreateJacobiMatrix(
   }
 }
 
-double CalculateMatrixMaximumNorm(std::vector<double>& x, std::vector<double>& y) {
+double CalculateVectorMaximumNorm(std::vector<double>& x, std::vector<double>& y) {
   double max = -1;
   int n = x.size();
   for (int i = 0; i < n; i++) {
