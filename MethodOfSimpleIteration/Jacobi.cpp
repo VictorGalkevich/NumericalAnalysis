@@ -104,7 +104,7 @@ std::vector<double> SimpleIteration(
       tmp += b[i];
       xk_1[i] = tmp;
     }
-    normValue = CalculateMatrixMaximumNorm(xk, xk_1);
+    normValue = CalculateVectorMaximumNorm(xk, xk_1);
   } while (normValue > precision);
 
   return xk_1;
