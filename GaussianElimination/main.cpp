@@ -235,6 +235,7 @@ int main() {
     const std::vector<std::vector<double> > forward = GaussianElimination(a, b, x);
 
     std::cout << "Matrix A determinant is: " << CalculateUpperTrinagleMatrixDeterminant(forward) << "\n\n";
+
     std::cout << "X vector: \n\n";
     Print(x);
     std::cout << "\nResidual vector: \n\n";
